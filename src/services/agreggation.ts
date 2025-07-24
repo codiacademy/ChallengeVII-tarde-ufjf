@@ -1,12 +1,11 @@
 // src/services/agreggation.ts
-
 import type { ChartData, ChartOptions } from "chart.js";
 import { monthNames } from "../utils/index";
 import type { Gasto } from "../types/index";
 import type { Venda } from "../types/index";
 
-// === ATUALIZAÇÃO CRÍTICA ===
-// Esta linha estava faltando ou foi removida. Ela DEFINE e EXPORTA o tipo para uso em outros arquivos.
+// Ela DEFINE e EXPORTA o tipo para uso em outros arquivos.
+//Em um futuro código, o proximo passo seria migrar esse ts para o backend
 export type AggregationType = 'daily' | 'monthly' | 'yearly' | 'category' | 'type';
 
 // --- Funções de Agregação para GASTOS ---
@@ -42,7 +41,7 @@ export function aggregateByPeriod(
     } else if (aggregationType === 'monthly') {
       if (selectedYear && year !== selectedYear) return;
       key = month;
-    } else { // aggregationType === 'yearly'
+    } else { 
       key = year;
     }
 
@@ -67,7 +66,6 @@ export function aggregateByTipoDespesa(items: Gasto[]): Record<string, number> {
   return agg;
 }
 
-// --- Funções de Agregação para VENDAS ---
 export function aggregateSalesByCourseType(vendas: Venda[]): Record<string, number> {
   const agg: Record<string, number> = {};
   vendas.forEach(venda => {
@@ -109,7 +107,7 @@ export function aggregateSalesByPeriod(
     } else if (aggregationType === 'monthly') {
       if (selectedYear && year !== selectedYear) return;
       key = month;
-    } else { // aggregationType === 'yearly'
+    } else { 
       key = year;
     }
 
@@ -124,7 +122,7 @@ export function prepareChartData(
   agg: Record<string, number>,
   label: string,
   chartType: "bar" | "pie" | "line",
-  aggregationType: AggregationType // <-- AGORA ESTÁ CORRETO AQUI!
+  aggregationType: AggregationType 
 ): {
   data: ChartData<"bar" | "pie" | "line">;
   options: ChartOptions<"bar" | "pie" | "line">;
